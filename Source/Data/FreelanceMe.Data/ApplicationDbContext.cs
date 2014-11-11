@@ -22,7 +22,7 @@
             return new ApplicationDbContext();
         }
 
-        public IDbSet<Profile> Profiles { get; set; }
+        public IDbSet<UserProfile> Profiles { get; set; }
 
         public override int SaveChanges()
         {

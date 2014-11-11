@@ -3,7 +3,7 @@
     using FreelanceMe.Data.Models;
     using FreelanceMe.Web.Infrastructure.Mapping;
 
-    public class IndexProfileViewModel : IMapFrom<Profile>
+    public class IndexProfileViewModel : IMapFrom<UserProfile>
     {
         public ApplicationUser User { get; set; }
 

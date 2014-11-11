@@ -1,11 +1,12 @@
 ﻿namespace FreelanceMe.Data.Common.Repository
 {
-    using FreelanceMe.Data.Common.Repository;
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
+
+    using FreelanceMe.Data.Common.Repository;
 
     public class GenericRepository<T> : IRepository<T> where T : class
     {
@@ -30,6 +31,11 @@
         }
 
         public virtual T GetById(int id)
+        {
+            return this.DbSet.Find(id);
+        }
+
+        public T GetById(string id)
         {
             return this.DbSet.Find(id);
         }

@@ -1,6 +1,6 @@
 ﻿namespace FreelanceMe.Data.Models
 {
-    public enum UserType
+    public enum RoleType
     {
         Client,
         Freelancer
