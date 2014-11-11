@@ -7,8 +7,10 @@
     {
         public ApplicationUser User { get; set; }
 
-        public int Rating { get; set; }
+        public string FirstName { get; set; }
 
-        public UserType Type { get; set; }
+        public string LastName { get; set; }
+
+        public int Rating { get; set; }
     }
 }

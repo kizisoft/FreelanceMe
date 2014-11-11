@@ -3,10 +3,11 @@
 
 namespace FreelanceMe.Web.App_Start
 {
-    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using System;
     using System.Data.Entity;
     using System.Web;
+
+    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
     using Ninject.Web.Common;
@@ -65,8 +66,8 @@ namespace FreelanceMe.Web.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<DbContext>().To<ApplicationDbContext>();
-            kernel.Bind(typeof(IRepository<>)).To(typeof(GenericRepository<>));
             kernel.Bind(typeof(IDeletableEntityRepository<>)).To(typeof(DeletableEntityRepository<>));
+            kernel.Bind(typeof(IRepository<>)).To(typeof(GenericRepository<>));
         }
     }
 }

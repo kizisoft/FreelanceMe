@@ -35,17 +35,17 @@ textarea {
 
 .index-form {
     padding: 1%;
+    padding-top: 0;
     position: absolute;
     z-index: 100;
     top: 60%;
     left: 70%;
-    width: 20%;
-    min-width: 200px;
+    width: 18%;
+    min-width: 180px;
     font-family: "Arial Black";
-    font-size: 2em;
     text-shadow: 2px 2px 5px black, 2px 2px 100px black;
     color: #fff;
     border: 1px outset #fff;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.40);
+    border-radius: 5%;
+    background-color: rgba(10, 10, 9, 0.50);
 }

@@ -11,14 +11,16 @@
         <li data-target="#carousel-example-generic" data-slide-to="2"></li>
     </ol>
     <div class="index-form">
-        <p>Tell us what you need:</p>
-        <button class="btn btn-lg btn-primary">Hire</button>
-        <button class="btn btn-lg btn-primary">Work</button>
+        <h3>Tell us what you need:</h3>
+        <div class="text-center">
+            @Html.ActionLink("Hire", "Hire", "PostJobs", new { @class = "btn btn-lg btn-primary" })
+            @Html.ActionLink("Work", "Work", "PostJobs", new { @class = "btn btn-lg btn-primary" })
+        </div>
     </div>
     <!-- Wrapper for slides -->
     <div class="carousel-inner text-center" role="listbox">
         <div class="item active">
-            <img src="~/Images/Index_img.jpg" alt="FreelanceMe" width="100%">
+            <img src="~/Images/Index_img1.jpg" alt="FreelanceMe" width="100%">
             <div class="index-heading">
                 Work at home near your family...
             </div>
@@ -56,10 +58,13 @@
             @profile.User.UserName
         </div>
         <div class="col-md-4">
-            @profile.Rating
+            @profile.FirstName
         </div>
         <div class="col-md-4">
-            @profile.Type
+            @profile.LastName
+        </div>
+        <div class="col-md-4">
+            @profile.Rating
         </div>
     </div>
 }
