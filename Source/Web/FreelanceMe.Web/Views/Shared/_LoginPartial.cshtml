@@ -6,31 +6,12 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
-            <li>
-                @*@Html.ActionLink(User.Identity.GetUserName(), "Index", "Profiles", routeValues: null, htmlAttributes: new { title = "Profile" })*@
-
-
-                @*<div class="btn-group">
-                        @Html.ActionLink(User.Identity.GetUserName(), "Index", "Profiles", routeValues: null, htmlAttributes: new { title = "Profile" })
-                        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink(User.Identity.GetUserName(), "Index", "Profiles", routeValues: null, htmlAttributes: new { title = "Profile" })</li>
-                            <li>@Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
-                        </ul>
-                    </div>*@
-
-
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">@User.Identity.GetUserName()<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li>@Html.ActionLink("Profile settings", "Index", "Profiles", routeValues: null, htmlAttributes: new { title = "Profile" })</li>
                     <li>@Html.ActionLink("Change password", "ChangePassword", "Manage")</li>
                 </ul>
-            </li>
-
-
-
-
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>

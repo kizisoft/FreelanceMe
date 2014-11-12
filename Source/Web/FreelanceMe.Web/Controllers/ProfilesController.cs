@@ -12,10 +12,10 @@
 
     public class ProfilesController : Controller
     {
-        private IRepository<ApplicationUser> users;
-        private IRepository<UserProfile> profiles;
+        private readonly IRepository<ApplicationUser> users;
+        private readonly IDeletableEntityRepository<UserProfile> profiles;
 
-        public ProfilesController(IRepository<ApplicationUser> users, IRepository<UserProfile> profiles)
+        public ProfilesController(IRepository<ApplicationUser> users, IDeletableEntityRepository<UserProfile> profiles)
         {
             this.users = users;
             this.profiles = profiles;

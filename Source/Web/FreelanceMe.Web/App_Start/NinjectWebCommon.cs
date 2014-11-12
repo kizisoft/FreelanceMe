@@ -13,6 +13,7 @@ namespace FreelanceMe.Web.App_Start
 
     using FreelanceMe.Data;
     using FreelanceMe.Data.Common.Repository;
+    using FreelanceMe.Data.Models;
 
     public static class NinjectWebCommon
     {
@@ -65,6 +66,7 @@ namespace FreelanceMe.Web.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<DbContext>().To<ApplicationDbContext>();
+            kernel.Bind(typeof(IRepository<UserProfile>)).To(typeof(DeletableEntityRepository<UserProfile>));
             kernel.Bind(typeof(IDeletableEntityRepository<>)).To(typeof(DeletableEntityRepository<>));
             kernel.Bind(typeof(IRepository<>)).To(typeof(GenericRepository<>));
         }
