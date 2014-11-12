@@ -1,14 +1,15 @@
 ﻿namespace FreelanceMe.Web
 {
     using System;
+
+    using FreelanceMe.Data;
+    using FreelanceMe.Data.Models;
+
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin;
     using Microsoft.Owin.Security.Cookies;
     using Owin;
-
-    using FreelanceMe.Data;
-    using FreelanceMe.Data.Models;
 
     public partial class Startup
     {

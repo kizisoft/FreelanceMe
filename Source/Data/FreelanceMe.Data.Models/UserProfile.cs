@@ -1,11 +1,11 @@
 ﻿namespace FreelanceMe.Data.Models
 {
     using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     using FreelanceMe.Data.Common.Models;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
 
     public class UserProfile : AuditInfo, IDeletableEntity
     {

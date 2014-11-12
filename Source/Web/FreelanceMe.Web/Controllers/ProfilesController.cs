@@ -1,6 +1,5 @@
 ﻿namespace FreelanceMe.Web.Controllers
 {
-    using Microsoft.AspNet.Identity;
     using System.Linq;
     using System.Web.Mvc;
 
@@ -9,6 +8,8 @@
     using FreelanceMe.Data.Common.Repository;
     using FreelanceMe.Data.Models;
     using FreelanceMe.Web.ViewModels.Profiles;
+
+    using Microsoft.AspNet.Identity;
 
     public class ProfilesController : Controller
     {
@@ -31,7 +32,7 @@
                 currentProfileView = new ProfileViewModel { User = currentUser };
             }
 
-            return View(currentProfileView);
+            return this.View(currentProfileView);
         }
 
         // GET: Profiles/Details/5

@@ -1,6 +1,7 @@
-﻿using System;
-namespace FreelanceMe.Data.Models
+﻿namespace FreelanceMe.Data.Models
 {
+    using System;
+
     public abstract class Work
     {
         public Work()

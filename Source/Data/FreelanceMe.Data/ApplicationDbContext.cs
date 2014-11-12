@@ -1,13 +1,12 @@
 ﻿namespace FreelanceMe.Data
 {
     using System;
-    using Microsoft.AspNet.Identity.EntityFramework;
     using System.Data.Entity;
     using System.Linq;
-
     using FreelanceMe.Data.Common.Models;
     using FreelanceMe.Data.Migrations;
     using FreelanceMe.Data.Models;
+    using Microsoft.AspNet.Identity.EntityFramework;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -17,12 +16,12 @@
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
         }
 
+        public IDbSet<UserProfile> Profiles { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
-
-        public IDbSet<UserProfile> Profiles { get; set; }
 
         public override int SaveChanges()
         {

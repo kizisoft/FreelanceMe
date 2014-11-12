@@ -1,7 +1,8 @@
 ﻿namespace FreelanceMe.Web.ViewModels.Profiles
 {
-    using AutoMapper;
     using System.ComponentModel.DataAnnotations;
+
+    using AutoMapper;
 
     using FreelanceMe.Data.Models;
     using FreelanceMe.Web.Infrastructure.Mapping;
