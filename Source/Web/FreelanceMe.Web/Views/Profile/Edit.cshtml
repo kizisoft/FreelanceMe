@@ -1,28 +1,23 @@
-﻿@using FreelanceMe.Web.ViewModels.Profiles
-@model ProfileViewModel
+﻿@using FreelanceMe.Web.ViewModels.Profile
+@model ProfileInputViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Edit Profile";
 }
 
-<h2>Welcome <b>@Html.DisplayFor(model => model.User.UserName)</b>,</h2>
+<h2>Welcome <b><em>@this.User.Identity.Name</em></b></h2>
 
-<div class="row">
-    <div class="col-md-offset-4 col-md-4">
-        <div class="alert alert-dismissable alert-warning">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <h4>Attention!</h4>
-            <p>Please complete your registration to be able to use a full functionality of this site!</p>
-        </div>
-    </div>
-</div>
+@if (Model == null)
+{
+    @CustomWorning.Create("Attention!", "Please complete your profile information to be able to use a full functionality of this site!");
+}
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Account Details</h4>
+        <h4>@ViewBag.Title</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 

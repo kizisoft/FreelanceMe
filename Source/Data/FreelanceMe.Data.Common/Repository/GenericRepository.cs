@@ -37,7 +37,7 @@
 
         public T GetById(string id)
         {
-            return this.DbSet.Find(id);
+            return this.DbSet.Find(id.ToString());
         }
 
         public virtual void Add(T entity)

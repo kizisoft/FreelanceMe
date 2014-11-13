@@ -1,4 +1,4 @@
-﻿namespace FreelanceMe.Web.ViewModels.Profiles
+﻿namespace FreelanceMe.Web.ViewModels.Profile
 {
     using System.ComponentModel.DataAnnotations;
 
@@ -7,10 +7,8 @@
     using FreelanceMe.Data.Models;
     using FreelanceMe.Web.Infrastructure.Mapping;
 
-    public class ProfileViewModel : IMapFrom<UserProfile>
+    public class ProfileInputViewModel : IMapFrom<UserProfile>
     {
-        public virtual ApplicationUser User { get; set; }
-
         [Required]
         [StringLength(30)]
         public string FirstName { get; set; }

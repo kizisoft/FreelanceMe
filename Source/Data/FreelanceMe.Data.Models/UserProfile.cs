@@ -11,14 +11,14 @@
     {
         public UserProfile()
         {
-            this.Id = Guid.NewGuid();
             this.PostedProjects = new HashSet<Project>();
             this.WorkOnProjects = new HashSet<Project>();
         }
 
-        public Guid Id { get; set; }
+        [Key, ForeignKey("User")]
+        public string Id { get; set; }
 
-        public virtual Guid UserId { get; set; }
+        // public Guid UserId { get; set; }
 
         public virtual ApplicationUser User { get; set; }
 
