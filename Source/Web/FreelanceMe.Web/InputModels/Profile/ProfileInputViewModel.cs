@@ -1,4 +1,4 @@
-﻿namespace FreelanceMe.Web.ViewModels.Profile
+﻿namespace FreelanceMe.Web.InputModels.Profile
 {
     using System.ComponentModel.DataAnnotations;
 
@@ -24,5 +24,7 @@
         [Required]
         [StringLength(30)]
         public string City { get; set; }
+
+        public string Avatar { get; set; }
     }
 }

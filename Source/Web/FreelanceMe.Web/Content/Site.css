@@ -49,3 +49,80 @@ textarea {
     border-radius: 5%;
     background-color: rgba(10, 10, 9, 0.50);
 }
+
+.avatar-container {
+    padding-top: 1px;
+    width: 226px;
+    height: 249px;
+    border: 3px solid #b0da4c;
+}
+
+.avatar-image {
+    padding: 2px 2px 0 2px;
+    text-align: center;
+    border: 1px dashed #808080;
+    font-size: 15em;
+}
+
+#avatar-image {
+    width: 216px;
+    height: 216px;
+    display: none;
+}
+
+.avatar-label {
+    margin: 2px;
+    display: block;
+    position: absolute;
+    width: 216px;
+    height: 22px;
+    text-align: center;
+    color: #2a2bef;
+    background-color: #ffe762;
+}
+
+.avatar-header {
+    display: none;
+    position: absolute;
+    left: 6px;
+    top: 32px;
+    width: 214px;
+    height: 20px;
+    opacity: .7;
+    background-color: #000;
+}
+
+#avatar-clear {
+    padding: 2px 5px 2px 5px;
+    display: none;
+    position: absolute;
+    top: 34px;
+    left: 202px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.3);
+    font-size: .6em;
+    z-index: 1;
+}
+
+    #avatar-clear:hover {
+        cursor: pointer;
+        color: #fff;
+        background-color: #da2323;
+    }
+
+.avatar-btn {
+    position: absolute;
+    top: 0;
+    left: 2px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    font-size: 0;
+    cursor: pointer;
+    border-top: 24px solid #000;
+    border-left: 216px solid #000;
+}
+
+.avatar-label:hover {
+    text-decoration: underline;
+}

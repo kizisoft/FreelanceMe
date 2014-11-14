@@ -8,7 +8,7 @@
 
     using FreelanceMe.Data.Common.Repository;
     using FreelanceMe.Data.Models;
-    using FreelanceMe.Web.ViewModels.Profile;
+    using FreelanceMe.Web.InputModels.Profile;
 
     using Microsoft.AspNet.Identity;
 
@@ -43,6 +43,11 @@
         {
             var userId = this.User.Identity.GetUserId();
             var profile = this.profiles.All().Where(p => p.Id == userId).Project().To<ProfileInputViewModel>().FirstOrDefault();
+            if (profile == null)
+            {
+                profile = new ProfileInputViewModel();
+            }
+
             return this.View(profile);
         }
 

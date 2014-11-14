@@ -38,6 +38,10 @@
         [StringLength(30)]
         public string City { get; set; }
 
+        public string Avatar { get; set; }
+
+        public string AvatarPath { get; set; }
+
         public virtual ICollection<Project> PostedProjects { get; set; }
 
         public virtual ICollection<Project> WorkOnProjects { get; set; }
