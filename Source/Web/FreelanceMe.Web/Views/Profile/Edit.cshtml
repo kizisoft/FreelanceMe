@@ -66,16 +66,19 @@
             <div class="col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(model => model.Avatar, new { @class = "control-label" })
-                    <div class="text-center avatar-container">
-                        <span id="avatar-glyph" class="glyphicon glyphicon glyphicon-user avatar-image" aria-hidden="true"></span>
-                        <img id="avatar-image" class="avatar-image" src="#" alt="Avatar" />
-                        <div id="avatar-header" class="avatar-header" data-toggle="tooltip" data-placement="right" title="Tooltip on right"></div>
-                        <span id="avatar-clear" class="pull-right">X</span>
-                        <div class="avatar-label">
-                            <span id="avatar-text">Add Profile Picture</span>
-                            <input id="avatar-file" type="file" name="avatar-image" class="avatar-btn" />
+
+                    <div class="avatar-container text-center">
+                        <span id="avatar-glyph" class="avatar-image avatar-glyph glyphicon glyphicon-user" aria-hidden="true"></span>
+                        <img id="avatar-image" class="avatar-image hidden" src="#" alt="Avatar" />
+                        <div class="avatar-menu">
+                            <a href="" id="btn-del" class="btn-btn btn-del avatar-btn avatar-btn-del glyphicon glyphicon-trash hidden" title="Delete Profile Picture"></a>
+                            <a href="" id="btn-add" class="btn-btn btn-add avatar-btn avatar-btn-add glyphicon glyphicon-plus" title="Add Profile Picture">
+                                <input id="avatar-file" class="avatar-file" type="file" name="avatar-image" />
+                            </a>
+                            <a href="" id="btn-save" class="btn-btn btn-save avatar-btn avatar-btn-save glyphicon glyphicon-floppy-save hidden" title="Save Profile Picture"></a>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -84,17 +87,23 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/jquery")
 
     <script>
-        $('#avatar-clear').on('click', function () {
+        $('#avatar-file').hover(function (e) {
+            $('#btn-add').toggleClass('avatar-file-hover');
+        },
+        function (e) {
+            $('#btn-add').toggleClass('avatar-file-hover')
+        });
+
+        $('#btn-del').on('click', function () {
+            debugger;
+            $('#avatar-glyph').toggleClass('hidden');
+            $('#avatar-image').toggleClass('hidden');
             $('#avatar-file').val('');
             $('#avatar-image').attr('src', '');
-            $('#avatar-text').html('Add Profile Picture');
-            $('#avatar-header').slideToggle();
-            $('#avatar-clear').slideToggle();
-            $('#avatar-image').hide();
-            $('#avatar-glyph').show();
+            $('#btn-del').toggleClass('hidden');
+            $('#btn-save').toggleClass('hidden');
         });
 
         $('#avatar-file').on('change', function () {
@@ -102,12 +111,11 @@
             var fReader = new FileReader();
             fReader.readAsDataURL(input.files[0]);
             fReader.onloadend = function (event) {
-                var img = $('#avatar-image').attr('src', event.target.result);
-                $('#avatar-text').html('Change Profile Picture');
-                $('#avatar-header').slideToggle();
-                $('#avatar-clear').slideToggle();
-                $('#avatar-image').show();
-                $('#avatar-glyph').hide();
+                $('#avatar-image').attr('src', event.target.result);
+                $('#avatar-glyph').toggleClass('hidden');
+                $('#avatar-image').toggleClass('hidden');
+                $('#btn-del').toggleClass('hidden');
+                $('#btn-save').toggleClass('hidden');
             }
         });
     </script>
