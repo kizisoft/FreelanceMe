@@ -223,6 +223,7 @@
     <Compile Include="ViewModels\Manage\VerifyPhoneNumberViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Avatar\avatar.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -231,9 +232,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\ajax-loader.gif" />
     <Content Include="Images\Index_img1.jpg" />
     <Content Include="Images\Index_img2.jpg" />
     <Content Include="Images\Index_img3.jpg" />
+    <Content Include="Scripts\Avatar\Avatar.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\bootstrap-theme.css.map" />
@@ -244,6 +247,8 @@
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -309,6 +314,10 @@
     <ProjectReference Include="..\FreelanceMe.Web.Infrastructure\FreelanceMe.Web.Infrastructure.csproj">
       <Project>{1f7dffd5-b612-49c0-acfc-2a2444e3f4c9}</Project>
       <Name>FreelanceMe.Web.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HtmlCustomHelpers\HtmlCustomHelpers.csproj">
+      <Project>{42645ad6-9929-489a-aeb8-48258bf0a182}</Project>
+      <Name>HtmlCustomHelpers</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

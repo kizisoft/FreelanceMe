@@ -1,8 +1,13 @@
 ﻿namespace FreelanceMe.Web.Controllers
 {
     using System;
+    using System.Collections;
     using System.Linq;
+    using System.Web.Helpers;
     using System.Web.Mvc;
+    using System.Drawing;
+    using System.IO;
+    using System.Web;
 
     using AutoMapper.QueryableExtensions;
 
@@ -10,7 +15,11 @@
     using FreelanceMe.Data.Models;
     using FreelanceMe.Web.InputModels.Profile;
 
+    using HtmlCustomHelpers;
+
     using Microsoft.AspNet.Identity;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
 
     [Authorize]
     public class ProfileController : Controller
@@ -72,6 +81,30 @@
             this.profiles.SaveChanges();
 
             return this.RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult AvatarPostAjax(string data)
+        {
+            var indexOfBase64 = data.IndexOf("base64,");
+            var base64 = data.Substring(indexOfBase64 + 7);
+
+            using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(base64)))
+            {
+                using (FileStream fs = new FileStream(Server.MapPath("~/Images/fileImg.jpg"), FileMode.Create))
+                {
+                    ms.WriteTo(fs);
+                }
+            }
+
+            return Json("OK");
+        }
+
+        [HttpPost]
+        public ActionResult AvatarDeleteAjax(string name, string token)
+        {
+            AntiForgery.Validate(Request.Cookies["__RequestVerificationToken"].Value, token);
+            return Json("OK");
         }
     }
 }
