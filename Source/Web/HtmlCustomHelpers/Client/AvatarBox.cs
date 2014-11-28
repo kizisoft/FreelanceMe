@@ -1,15 +1,21 @@
-﻿namespace HtmlCustomHelpers
+﻿namespace HtmlCustomHelpers.Client
 {
     using System.Web;
     using System.Web.Mvc;
 
     public class AvatarBox : IHtmlString
     {
-        private readonly string text;
+        private readonly string controller;
+        private readonly string actionSave;
+        private readonly string actionDelete;
+        private readonly string actionLoad;
 
-        public AvatarBox(string text)
+        public AvatarBox(string controller, string actionLoad, string actionSave, string actionDelete)
         {
-            this.text = text;
+            this.controller = controller;
+            this.actionLoad = actionLoad;
+            this.actionSave = actionSave;
+            this.actionDelete = actionDelete;
         }
 
         public string ToHtmlString()
@@ -40,6 +46,7 @@
 
             var loading = new TagBuilder("div");
             loading.AddCssClass("avatar-loading hidden");
+            loading.Attributes.Add("id", "avatar-loading");
             wrapper.InnerHtml += loading;
 
             var online = new TagBuilder("span");
@@ -75,7 +82,18 @@
             btnSave.Attributes.Add("title", "Save Profile Picture");
             menu.InnerHtml += btnSave;
 
+            var avatarFileName = new TagBuilder("input");
+            avatarFileName.AddCssClass("hidden");
+            avatarFileName.Attributes.Add("id", "avatar");
+            avatarFileName.Attributes.Add("type", "hidden");
+            avatarFileName.Attributes.Add("name", "avatar");
+            wrapper.InnerHtml += avatarFileName;
+
+            var script = new TagBuilder("script");
+            script.InnerHtml = "new HtmlCustomHelpers.Avatar('" + this.controller + "', '" + this.actionLoad + "', '" + this.actionSave + "', '" + this.actionDelete + "');";
+
             wrapper.InnerHtml += menu;
+            wrapper.InnerHtml += script;
 
             return wrapper.ToString();
         }

@@ -1,83 +1,117 @@
-﻿(function () {
-    $('#avatar-file').hover(
-        function (e) {
-            $('#btn-add').addClass('avatar-file-hover');
-        },
-        function (e) {
-            $('#btn-add').removeClass('avatar-file-hover')
-        });
+﻿var HtmlCustomHelpers = HtmlCustomHelpers || {};
 
-    $('#btn-del').on('click', function () {
-        if (!$('#avatar-online').hasClass('hidden')) {
-            var data = JSON.stringify({ name: '@this.User.Identity.Name', token: $('[name = "__RequestVerificationToken"]').val() });
-            $.ajax({
-                url: 'AvatarDeleteAjax',
-                type: "POST",
-                dataType: 'json',
-                contentType: 'application/json',
-                data: data,
-                success: function (response) {
-                    alert('success');
-                },
-                error: function (er) {
-                    alert('error');
-                }
-            });
+(function (Scope) {
+    var Avatar = (function () {
+        var self;
+
+        function Avatar(controller, actionLoad, actionSave, actionDelete) {
+            if (!controller || !actionLoad || !actionSave || !actionDelete) {
+                throw new Error('Missing parameter(s)!');
+            }
+
+            self = this;
+            this.controller = controller;
+            this.actionLoad = actionLoad;
+            this.actionSave = actionSave;
+            this.actionDelete = actionDelete;
+            this.isOnline = false;
+
+            $('#avatar-file').hover(avatarFileHoverIn, avatarFileHoverOut);
+            $('#btn-del').on('click', btnDelOnClick);
+            $('#btn-save').on('click', btnSaveOnClick);
+            $('#avatar-file').on('change', avatarFileOnChange);
+
+            avatarLoad();
         }
 
-        $('#avatar-image').addClass('hidden');
-        $('#btn-del').addClass('hidden');
-        $('#btn-save').addClass('hidden');
-        $('#avatar-online').addClass('hidden');
-        $('#avatar-glyph').removeClass('hidden');
-        $('#avatar-file').val('');
-        $('#avatar-image').attr('src', '');
-    });
-
-    $('#btn-save').on('click', function () {
-        if ($('#btn-save').hasClass('btn-save-disabled')) {
-            return;
+        function avatarLoad() {
+            var url = self.controller ? '/' + self.controller + '/' + self.actionLoad : self.actionLoad;
+            $('#avatar-loading').removeClass('hidden');
+            Scope.HttpRequester.get(url).then(function avatarLoadSuccess(data) {
+                self.isOnline = true;
+                showImage(data);
+            }, showError);
         }
 
-        $('#avatar-loading').removeClass('hidden');
+        function showImage(data) {
+            if (data) {
+                $('#avatar-image').attr('src', data);
+                $('#avatar-glyph').addClass('hidden');
+                $('#avatar-image').removeClass('hidden');
+            }
 
-        var img = $('#avatar-image').attr('src');
-        var data = JSON.stringify({ data: img });
-        $.ajax({
-            url: 'AvatarPostAjax',
-            type: "POST",
-            dataType: 'json',
-            contentType: 'application/json',
-            data: data,
-            success: function (response) {
-                $('#avatar-loading').addClass('hidden');
-                $('#btn-save').addClass('btn-save-disabled');
-                $('#btn-save').removeClass('btn-save');
+            if (self.isOnline) {
+                $('#btn-save').addClass('hidden');
+                $('#btn-add').addClass('hidden');
+                $('#btn-del').removeClass('avatar-btn-left hidden');
+                $('#btn-del').addClass('avatar-btn-middle');
                 $('#avatar-online').removeClass('hidden');
-            },
-            error: function (er) {
-                $('#avatar-loading').removeClass('hidden');
-                alert('error');
+            } else {
+                $('#btn-del').removeClass('avatar-btn-middle hidden');
+                $('#btn-del').addClass('avatar-btn-left');
+                $('#btn-save').removeClass('hidden');
             }
-        });
-    });
 
-    $('#avatar-file').on('change', function () {
-        var input = $('#avatar-file')[0];
-        var fReader = new FileReader();
-        fReader.readAsDataURL(input.files[0]);
-        fReader.onloadend = function (event) {
-            $('#avatar-image').attr('src', event.target.result);
-            $('#avatar-glyph').addClass('hidden');
-            $('#avatar-image').removeClass('hidden');
-            $('#btn-del').removeClass('hidden');
-            var $btnSave = $('#btn-save');
-            $btnSave.removeClass('hidden');
+            $('#avatar-loading').addClass('hidden');
+        }
 
-            if ($btnSave.hasClass('btn-save-disabled')) {
-                $btnSave.addClass('btn-save');
-                $btnSave.removeClass('btn-save-disabled');
+        function hideImage() {
+            $('#avatar-image').addClass('hidden');
+            $('#btn-del').addClass('hidden');
+            $('#btn-save').addClass('hidden');
+            $('#btn-add').removeClass('hidden');
+            $('#avatar-online').addClass('hidden');
+            $('#avatar-glyph').removeClass('hidden');
+            $('#avatar-file').val('');
+            $('#avatar-image').attr('src', '');
+        }
+
+        function showError(error) {
+            alert(error);
+            $('#avatar-loading').addClass('hidden');
+        }
+
+        function avatarFileHoverIn(e) {
+            $('#btn-add').addClass('avatar-file-hover');
+        }
+
+        function avatarFileHoverOut(e) {
+            $('#btn-add').removeClass('avatar-file-hover');
+        }
+
+        function btnDelOnClick() {
+            if (self.isOnline) {
+                var data = { name: '@this.User.Identity.Name', token: $('[name = "__RequestVerificationToken"]').val() };
+                var url = self.controller ? '/' + self.controller + '/' + self.actionDelete : self.actionDelete;
+                Scope.HttpRequester.post(url, data).then(function avatarLoadSuccess(data) {
+                    self.isOnline = false;
+                }, showError);
+            }
+
+            hideImage();
+        }
+
+        function btnSaveOnClick() {
+            var img = $('#avatar-image').attr('src');
+            var url = self.controller ? '/' + self.controller + '/' + self.actionSave : self.actionSave;
+            $('#avatar-loading').removeClass('hidden');
+            Scope.HttpRequester.post(url, { data: img }).then(function avatarSaveSuccess() {
+                self.isOnline = true;
+                showImage();
+            }, showError);
+        }
+
+        function avatarFileOnChange() {
+            var input = $('#avatar-file')[0];
+            var fReader = new FileReader();
+            fReader.readAsDataURL(input.files[0]);
+            fReader.onloadend = function (event) {
+                showImage(event.target.result);
             }
         }
-    });
-}());
+
+        return Avatar;
+    }());
+
+    Scope.Avatar = Avatar;
+}(HtmlCustomHelpers));

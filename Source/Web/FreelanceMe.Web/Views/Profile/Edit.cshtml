@@ -9,7 +9,7 @@
 <h2 class="text-center "><u>Welcome <b><em>@this.User.Identity.Name</em></b> !</u></h2>
 <br />
 
-@if (Model == null)
+@if (string.IsNullOrEmpty(Model.LastName))
 {
     @CustomWorning.Create("Attention!", "Please complete your profile information to be able to use a full functionality of this site!");
 }
@@ -17,14 +17,14 @@
 <h4>@ViewBag.Title</h4>
 <hr />
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="form-horizontal">
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="form-horizontal">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+        <div class="row">
+            <div class="col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -62,120 +62,19 @@
                         <input type="submit" value="Save" class="btn btn-default" />
                     </div>
                 </div>
-            }
-        </div>
-    </div>
+            </div>
 
-    <div class="col-md-6">
-        <div class="form-horizontal">
-            <div class="form-group">
-                @Html.LabelFor(model => model.Avatar, new { @class = "control-label" })
-
-                @*<div class="avatar-container text-center">
-                        @Html.AntiForgeryToken()
-                        <span id="avatar-glyph" class="avatar-image avatar-glyph glyphicon glyphicon-user" aria-hidden="true"></span>
-                        <img id="avatar-image" class="avatar-image hidden" src="#" alt="Avatar" />
-                        <div id="avatar-loading" class="avatar-loading hidden"></div>
-                        <span id="avatar-online" class="avatar-online hidden">Online</span>
-                        <div class="avatar-menu">
-                            <span id="btn-del" class="btn-btn btn-del avatar-btn avatar-btn-left glyphicon glyphicon-trash hidden" title="Delete Profile Picture"></span>
-                            <span id="btn-add" class="btn-btn btn-add avatar-btn avatar-btn-middle glyphicon glyphicon-plus" title="Add Profile Picture">
-                                <input id="avatar-file" class="avatar-file" type="file" name="avatarImage" />
-                            </span>
-                            <span id="btn-save" class="btn-btn btn-save avatar-btn avatar-btn-right glyphicon glyphicon-floppy-save hidden" title="Save Profile Picture"></span>
-                        </div>
-                    </div>*@
-
-                @Html.Avatar("text")
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Avatar, new { @class = "control-label" })
+                    @Html.Avatar("Profile", "AvatarLoadAjax", "AvatarPostAjax", "AvatarDeleteAjax")
+                </div>
             </div>
         </div>
-    </div>
+    }
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/avatar")
-
-    @*<script>
-            $('#avatar-file').hover(function (e) {
-                $('#btn-add').addClass('avatar-file-hover');
-            },
-            function (e) {
-                $('#btn-add').removeClass('avatar-file-hover')
-            });
-
-            $('#btn-del').on('click', function () {
-                if (!$('#avatar-online').hasClass('hidden')) {
-                    var data = JSON.stringify({ name: '@this.User.Identity.Name', token: $('[name = "__RequestVerificationToken"]').val() });
-                    $.ajax({
-                        url: 'AvatarDeleteAjax',
-                        type: "POST",
-                        dataType: 'json',
-                        contentType: 'application/json',
-                        data: data,
-                        success: function (response) {
-                            alert('success');
-                        },
-                        error: function (er) {
-                            alert('error');
-                        }
-                    });
-                }
-
-                $('#avatar-image').addClass('hidden');
-                $('#btn-del').addClass('hidden');
-                $('#btn-save').addClass('hidden');
-                $('#avatar-online').addClass('hidden');
-                $('#avatar-glyph').removeClass('hidden');
-                $('#avatar-file').val('');
-                $('#avatar-image').attr('src', '');
-            });
-
-            $('#btn-save').on('click', function () {
-                if ($('#btn-save').hasClass('btn-save-disabled')) {
-                    return;
-                }
-
-                $('#avatar-loading').removeClass('hidden');
-
-                var img = $('#avatar-image').attr('src');
-                var data = JSON.stringify({ data: img });
-                $.ajax({
-                    url: 'AvatarPostAjax',
-                    type: "POST",
-                    dataType: 'json',
-                    contentType: 'application/json',
-                    data: data,
-                    success: function (response) {
-                        $('#avatar-loading').addClass('hidden');
-                        $('#btn-save').addClass('btn-save-disabled');
-                        $('#btn-save').removeClass('btn-save');
-                        $('#avatar-online').removeClass('hidden');
-                    },
-                    error: function (er) {
-                        $('#avatar-loading').removeClass('hidden');
-                        alert('error');
-                    }
-                });
-            });
-
-            $('#avatar-file').on('change', function () {
-                var input = $('#avatar-file')[0];
-                var fReader = new FileReader();
-                fReader.readAsDataURL(input.files[0]);
-                fReader.onloadend = function (event) {
-                    $('#avatar-image').attr('src', event.target.result);
-                    $('#avatar-glyph').addClass('hidden');
-                    $('#avatar-image').removeClass('hidden');
-                    $('#btn-del').removeClass('hidden');
-                    var $btnSave = $('#btn-save');
-                    $btnSave.removeClass('hidden');
-
-                    if ($btnSave.hasClass('btn-save-disabled')) {
-                        $btnSave.addClass('btn-save');
-                        $btnSave.removeClass('btn-save-disabled');
-                    }
-                }
-            });
-        </script>*@
 }

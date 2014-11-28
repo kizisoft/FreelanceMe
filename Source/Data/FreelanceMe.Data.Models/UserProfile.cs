@@ -18,8 +18,6 @@
         [Key, ForeignKey("User")]
         public string Id { get; set; }
 
-        // public Guid UserId { get; set; }
-
         public virtual ApplicationUser User { get; set; }
 
         [Required]
@@ -39,8 +37,6 @@
         public string City { get; set; }
 
         public string Avatar { get; set; }
-
-        public string AvatarPath { get; set; }
 
         public virtual ICollection<Project> PostedProjects { get; set; }
 

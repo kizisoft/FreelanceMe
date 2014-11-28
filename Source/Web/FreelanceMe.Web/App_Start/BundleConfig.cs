@@ -22,6 +22,7 @@
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/avatar").Include(
+                        "~/Scripts/Avatar/httpRequester.js",
                         "~/Scripts/Avatar/avatar.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
@@ -31,7 +32,7 @@
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862
-            BundleTable.EnableOptimizations = true;
+            BundleTable.EnableOptimizations = false;
         }
     }
 }

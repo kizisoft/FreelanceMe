@@ -1,33 +1,27 @@
 ﻿namespace FreelanceMe.Web.Controllers
 {
     using System;
-    using System.Collections;
+    using System.IO;
     using System.Linq;
     using System.Web.Helpers;
     using System.Web.Mvc;
-    using System.Drawing;
-    using System.IO;
-    using System.Web;
+    using Microsoft.AspNet.Identity;
 
     using AutoMapper.QueryableExtensions;
+
+    using HtmlCustomHelpers.Server;
 
     using FreelanceMe.Data.Common.Repository;
     using FreelanceMe.Data.Models;
     using FreelanceMe.Web.InputModels.Profile;
 
-    using HtmlCustomHelpers;
-
-    using Microsoft.AspNet.Identity;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
-
     [Authorize]
     public class ProfileController : Controller
     {
+        private const string PROFILE_PICTURE_PATH = "~/Images/ProfilePictures";
+
         private readonly IRepository<ApplicationUser> users;
         private readonly IDeletableEntityRepository<UserProfile> profiles;
-
-        // private Guid userId;
 
         public ProfileController(IRepository<ApplicationUser> users, IDeletableEntityRepository<UserProfile> profiles)
         {
@@ -70,41 +64,68 @@
             }
 
             var userId = this.User.Identity.GetUserId();
-            this.profiles.Add(new UserProfile
+            var profileDb = this.profiles.GetById(userId);
+
+            if (profileDb == null)
             {
-                Id = userId,
-                FirstName = profile.FirstName,
-                LastName = profile.LastName,
-                Country = profile.Country,
-                City = profile.City
-            });
+                this.profiles.Add(new UserProfile
+                {
+                    Id = userId,
+                    FirstName = profile.FirstName,
+                    LastName = profile.LastName,
+                    Country = profile.Country,
+                    City = profile.City,
+                    Avatar = profile.Avatar
+                });
+            }
+            else
+            {
+                profileDb.FirstName = profile.FirstName;
+                profileDb.LastName = profile.LastName;
+                profileDb.Country = profile.Country;
+                profileDb.City = profile.City;
+                profileDb.Avatar = profile.Avatar;
+                this.profiles.Update(profileDb);
+            }
+
             this.profiles.SaveChanges();
 
             return this.RedirectToAction("Index", "Home");
         }
 
-        [HttpPost]
-        public ActionResult AvatarPostAjax(string data)
+        [HttpGet]
+        public ActionResult AvatarLoadAjax()
         {
-            var indexOfBase64 = data.IndexOf("base64,");
-            var base64 = data.Substring(indexOfBase64 + 7);
+            var userId = this.User.Identity.GetUserId();
+            var profileDb = this.profiles.GetById(userId);
 
-            using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(base64)))
+            string imageName = null;
+            Avatar avatar = new Avatar();
+
+            if (profileDb != null && !string.IsNullOrEmpty(profileDb.Avatar))
             {
-                using (FileStream fs = new FileStream(Server.MapPath("~/Images/fileImg.jpg"), FileMode.Create))
-                {
-                    ms.WriteTo(fs);
-                }
+                imageName = profileDb.Avatar;
             }
 
-            return Json("OK");
+            var loadResult = avatar.LoadFromFile(Server.MapPath(PROFILE_PICTURE_PATH), imageName);
+            return Json(loadResult, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public ActionResult AvatarDeleteAjax(string name, string token)
+        public ActionResult AvatarPostAjax(string data)
         {
-            AntiForgery.Validate(Request.Cookies["__RequestVerificationToken"].Value, token);
-            return Json("OK");
+            Avatar avatar = new Avatar();
+            var fileName = avatar.SaveToFile(data, Server.MapPath(PROFILE_PICTURE_PATH), this.User.Identity.GetUserId());
+            return Json(fileName);
+        }
+
+        [HttpPost]
+        public ActionResult AvatarDeleteAjax(string fileName, string token)
+        {
+            Avatar avatar = new Avatar();
+            var result = avatar.DeleteFile(Request, fileName, token);
+
+            return Json(result);
         }
     }
 }

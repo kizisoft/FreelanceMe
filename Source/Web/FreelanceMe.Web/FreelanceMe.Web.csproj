@@ -237,6 +237,7 @@
     <Content Include="Images\Index_img2.jpg" />
     <Content Include="Images\Index_img3.jpg" />
     <Content Include="Scripts\Avatar\Avatar.js" />
+    <Content Include="Scripts\Avatar\httpRequester.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\bootstrap-theme.css.map" />
@@ -327,6 +328,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Images\ProfilePictures\" />
     <Folder Include="ViewModels\Home\" />
     <Folder Include="ViewModels\Profile\" />
   </ItemGroup>
