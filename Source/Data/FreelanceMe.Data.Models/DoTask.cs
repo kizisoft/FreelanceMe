@@ -6,5 +6,7 @@
             : base()
         {
         }
+
+        public virtual Project Project { get; set; }
     }
 }
