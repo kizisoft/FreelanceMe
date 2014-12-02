@@ -1,24 +1,18 @@
 ﻿namespace FreelanceMe.Web.Controllers
 {
-    using System;
-    using System.IO;
     using System.Linq;
-    using System.Web.Helpers;
     using System.Web.Mvc;
-    using Microsoft.AspNet.Identity;
-
     using AutoMapper.QueryableExtensions;
-
-    using HtmlCustomHelpers.Server;
-
     using FreelanceMe.Data.Common.Repository;
     using FreelanceMe.Data.Models;
     using FreelanceMe.Web.InputModels.Profile;
+    using HtmlCustomHelpers.Server;
+    using Microsoft.AspNet.Identity;
 
     [Authorize]
     public class ProfileController : Controller
     {
-        private const string PROFILE_PICTURE_PATH = "~/Images/ProfilePictures";
+        private const string ProfilePicturePath = "~/Images/ProfilePictures";
 
         private readonly IRepository<ApplicationUser> users;
         private readonly IDeletableEntityRepository<UserProfile> profiles;
@@ -107,16 +101,16 @@
                 imageName = profileDb.Avatar;
             }
 
-            var loadResult = avatar.LoadFromFile(Server.MapPath(PROFILE_PICTURE_PATH), imageName);
-            return Json(loadResult, JsonRequestBehavior.AllowGet);
+            var loadResult = avatar.LoadFromFile(Server.MapPath(ProfilePicturePath), imageName);
+            return this.Json(loadResult, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public ActionResult AvatarPostAjax(string data)
         {
             Avatar avatar = new Avatar();
-            var fileName = avatar.SaveToFile(data, Server.MapPath(PROFILE_PICTURE_PATH), this.User.Identity.GetUserId());
-            return Json(fileName);
+            var fileName = avatar.SaveToFile(data, Server.MapPath(ProfilePicturePath), this.User.Identity.GetUserId());
+            return this.Json(fileName);
         }
 
         [HttpPost]
@@ -125,7 +119,7 @@
             Avatar avatar = new Avatar();
             var result = avatar.DeleteFile(Request, fileName, token);
 
-            return Json(result);
+            return this.Json(result);
         }
     }
 }

@@ -28,8 +28,14 @@
             var url = self.controller ? '/' + self.controller + '/' + self.actionLoad : self.actionLoad;
             $('#avatar-loading').removeClass('hidden');
             Scope.HttpRequester.get(url).then(function avatarLoadSuccess(data) {
-                self.isOnline = true;
-                showImage(data);
+                if (data !== "KO") {
+                    self.isOnline = true;
+                    var obj = JSON.parse(data);
+                    showImage(obj.data);
+                    $('#avatar').val(obj.avatar);
+                }
+
+                $('#avatar-loading').addClass('hidden');
             }, showError);
         }
 
@@ -81,9 +87,10 @@
 
         function btnDelOnClick() {
             if (self.isOnline) {
-                var data = { name: '@this.User.Identity.Name', token: $('[name = "__RequestVerificationToken"]').val() };
+                var data = { fileName: $('#avatar').val(), token: $('[name = "__RequestVerificationToken"]').val() };
                 var url = self.controller ? '/' + self.controller + '/' + self.actionDelete : self.actionDelete;
                 Scope.HttpRequester.post(url, data).then(function avatarLoadSuccess(data) {
+                    $('#avatar').val('');
                     self.isOnline = false;
                 }, showError);
             }
@@ -95,7 +102,8 @@
             var img = $('#avatar-image').attr('src');
             var url = self.controller ? '/' + self.controller + '/' + self.actionSave : self.actionSave;
             $('#avatar-loading').removeClass('hidden');
-            Scope.HttpRequester.post(url, { data: img }).then(function avatarSaveSuccess() {
+            Scope.HttpRequester.post(url, { data: img }).then(function avatarSaveSuccess(data) {
+                $('#avatar').val(data);
                 self.isOnline = true;
                 showImage();
             }, showError);

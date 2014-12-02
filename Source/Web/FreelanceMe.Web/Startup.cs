@@ -2,6 +2,7 @@
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(FreelanceMe.Web.Startup))]
+
 namespace FreelanceMe.Web
 {
     public partial class Startup
