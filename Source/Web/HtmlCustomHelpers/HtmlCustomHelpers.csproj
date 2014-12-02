@@ -79,6 +79,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\avatar.css" />
     <Content Include="Scripts\Avatar.js" />
     <Content Include="Scripts\httpRequester.js" />
   </ItemGroup>
