@@ -198,6 +198,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -221,6 +222,7 @@
     <Compile Include="ViewModels\Manage\ManageLoginsViewModel.cs" />
     <Compile Include="ViewModels\Manage\SetPasswordViewModel.cs" />
     <Compile Include="ViewModels\Manage\VerifyPhoneNumberViewModel.cs" />
+    <Compile Include="ViewModels\Profile\ProfileHomeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Avatar\avatar.css" />
@@ -298,6 +300,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Profile\Details.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
+    <Content Include="Views\Profile\ProfileHomeDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Data\FreelanceMe.Data.Common\FreelanceMe.Data.Common.csproj">
@@ -330,7 +333,7 @@
   <ItemGroup>
     <Folder Include="Images\ProfilePictures\" />
     <Folder Include="ViewModels\Home\" />
-    <Folder Include="ViewModels\Profile\" />
+    <Folder Include="Views\Projects\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

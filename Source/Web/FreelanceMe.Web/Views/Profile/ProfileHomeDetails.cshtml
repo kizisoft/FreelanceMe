@@ -1,0 +1,24 @@
+﻿@model IEnumerable<FreelanceMe.Web.ViewModels.Profile.ProfileHomeViewModel>
+
+@foreach (var item in Model)
+{
+    <a href="#" class="list-group-item">
+        <div class="row">
+            <div class="col-md-3">
+                @if (@item.Avatar == null)
+                {
+                    <div class="avatar avatar-empty glyphicon glyphicon-user"></div>
+                }
+                else
+                {
+                    <img class="avatar" src="@item.Avatar" alt="@item.FirstName @item.LastName" />
+                }
+            </div>
+            <div class="col-md-9">
+                <h4><b>@item.FirstName @item.LastName</b></h4>
+                <h5>@item.City - @item.Country</h5>
+                <h6><em><b>Created On:</b> @item.CreatedOn</em></h6>
+            </div>
+        </div>
+    </a>
+}

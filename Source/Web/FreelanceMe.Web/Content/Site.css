@@ -1,6 +1,9 @@
-﻿body {
+﻿html, body {
+    height: 100%;
+}
+
+body {
     padding-top: 50px;
-    padding-bottom: 20px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -48,4 +51,34 @@ textarea {
     border: 1px outset #fff;
     border-radius: 5%;
     background-color: rgba(10, 10, 9, 0.50);
+}
+
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -150px;
+}
+
+.footer-push, .footer {
+    height: 150px;
+}
+
+.footer {
+    padding: 20px;
+    text-align: center;
+    color: #b0b0b0;
+    background-color: #222222;
+}
+
+.avatar-empty {
+    padding-top: 1px;
+    font-size: 6.3em;
+}
+
+.avatar {
+    width: 90px;
+    height: 90px;
+    text-align: center;
+    border: 1px solid #c9c9c9;
 }

@@ -12,8 +12,8 @@
     <div class="index-form">
         <h3>Tell us what you need:</h3>
         <div class="text-center">
-            @Html.ActionLink("Hire", "Hire", "PostJobs", new { @class = "btn btn-lg btn-primary" })
-            @Html.ActionLink("Work", "Work", "PostJobs", new { @class = "btn btn-lg btn-primary" })
+            @Html.ActionLink("Hire", "Hire", "Projects", null, new { @class = "btn btn-lg btn-primary" })
+            @Html.ActionLink("Work", "Work", "Projects", null, new { @class = "btn btn-lg btn-primary" })
         </div>
     </div>
     <!-- Wrapper for slides -->
@@ -52,5 +52,26 @@
 
 @if (this.ViewBag.isProfileEmpty != null && this.ViewBag.isProfileEmpty)
 {
-    @CustomWorning.Create("Attention!", "Please complete your profile information to be able to use a full functionality of this site!");
+    @CustomWorning.Create("Attention!", "Please complete your profile information to be able to use a full functionality of this site!")
 }
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="list-group">
+            <div class="list-group-item active">Recent Projects</div>
+            <a href="#" class="list-group-item">
+                Dapibus ac facilisis in
+            </a>
+            <a href="#" class="list-group-item">
+                Morbi leo risus
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="list-group">
+            <div class="list-group-item active">Recent Profiles</div>
+            @{Html.RenderAction("ProfileHomeDetails", "Profile");}
+        </div>
+    </div>
+</div>

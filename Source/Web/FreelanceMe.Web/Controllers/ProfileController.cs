@@ -8,6 +8,7 @@
     using FreelanceMe.Web.InputModels.Profile;
     using HtmlCustomHelpers.Server;
     using Microsoft.AspNet.Identity;
+    using FreelanceMe.Web.ViewModels.Profile;
 
     [Authorize]
     public class ProfileController : Controller
@@ -33,6 +34,21 @@
             }
 
             return this.View(profile);
+        }
+
+        [AllowAnonymous]
+        public ActionResult ProfileHomeDetails()
+        {
+            var profiles = this.profiles.All().OrderBy(p => p.CreatedOn).Take(5).Project().To<ProfileHomeViewModel>().ToList();
+            foreach (var profile in profiles)
+            {
+                if (profile.Avatar != null)
+                {
+                    profile.Avatar = "\\Images\\ProfilePictures\\" + profile.Avatar;
+                }
+            }
+
+            return PartialView(profiles);
         }
 
         [HttpGet]
