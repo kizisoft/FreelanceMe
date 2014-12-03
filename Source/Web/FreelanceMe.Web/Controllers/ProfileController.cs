@@ -48,7 +48,7 @@
                 }
             }
 
-            return PartialView(profiles);
+            return PartialView("_ProfileHomeDetails", profiles);
         }
 
         [HttpGet]
