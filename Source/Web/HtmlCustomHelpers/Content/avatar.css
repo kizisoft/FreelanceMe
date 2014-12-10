@@ -135,8 +135,8 @@
 
 .avatar-online {
     position: absolute;
-    top: 41px;
-    left: 161px;
+    top: 38.5px;
+    left: 164px;
     height: 0;
     transform: rotate(45deg);
     color: #fff;

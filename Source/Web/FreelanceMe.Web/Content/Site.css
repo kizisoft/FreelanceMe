@@ -20,9 +20,10 @@ body {
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
+/*input,
 select,
-textarea {
+textarea*/
+.form-control, .input-group {
     max-width: 280px;
 }
 
@@ -44,7 +45,7 @@ textarea {
     top: 60%;
     left: 70%;
     width: 18%;
-    min-width: 180px;
+    min-width: 185px;
     font-family: "Arial Black";
     text-shadow: 2px 2px 5px black, 2px 2px 100px black;
     color: #fff;
@@ -81,4 +82,43 @@ textarea {
     height: 90px;
     text-align: center;
     border: 1px solid #c9c9c9;
+}
+
+.validation-summary-errors ul {
+    padding: 0;
+    list-style: none;
+}
+
+    .validation-summary-errors ul li {
+        margin: 5px 20px;
+        list-style: disc;
+    }
+
+li.disabled > a, li.active > a {
+    pointer-events: none;
+}
+
+.form-group > table.table {
+    margin-bottom: 0;
+}
+
+ul.pagination {
+    margin-top: 0;
+}
+
+.loading-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-image: url("/Images/ajax-loader.gif");
+    background-repeat: no-repeat;
+    background-position: 50% 35%;
+    background-color: rgba(0,0,0,.5);
+}
+
+.modal-body {
+    margin: 20px 0 5px 40px;
 }

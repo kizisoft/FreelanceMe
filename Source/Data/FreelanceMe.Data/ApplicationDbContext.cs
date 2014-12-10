@@ -18,6 +18,12 @@
 
         public IDbSet<UserProfile> Profiles { get; set; }
 
+        public IDbSet<Project> Projects { get; set; }
+
+        public IDbSet<Category> Categories { get; set; }
+
+        public IDbSet<SubCategory> SubCategories { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
