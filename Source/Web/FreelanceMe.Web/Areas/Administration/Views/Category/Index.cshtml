@@ -6,7 +6,7 @@
 <div id="loading" class="loading-box hidden"></div>
 
 <!-- Modal -->
-<div class="modal fade" id="modalBox" tabindex="-1" role="dialog" data-url="@Url.Action("Create")">
+<div class="modal fade" id="modalBox" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div id="modalContent" class="modal-content"></div>
     </div>
@@ -25,16 +25,16 @@
         <div class="input-group pull-left">
             <input type="text" class="form-control" placeholder="Search" name="search" value="@ViewBag.Search">
             <span class="input-group-btn">
-                <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                <button class="btn btn-default btn-search" type="submit"><span class="glyphicon glyphicon-search"></span></button>
             </span>
         </div>
         <div class="pull-right">
-            <button id="create-category" class="btn btn-primary" type="button">Create Category</button>
+            <button id="create-category" class="btn btn-primary btn-modal" type="button" data-url="@Url.Action("Create")">Create Category</button>
         </div>
     </div>
 
     <div class="form-group">
-        <table class="table table-bordered table-striped table-hover ">
+        <table class="table table-bordered table-striped">
             <thead>
                 <tr class="info">
                     <th>Name</th>
@@ -49,9 +49,8 @@
                         <td>@category.Name</td>
                         <td>@category.Description</td>
                         <td class="text-center">
-                            @Html.ActionLink("Delete", "Delete", new { Id = @category.Id }, new { @class = "btn btn-danger btn-xs" })
-                            @Html.ActionLink("Edit", "Edit", new { Id = @category.Id }, new { @class = "btn btn-info btn-xs" })
-                            @Html.ActionLink("Add Subcategory", "AddSubcategory", new { Id = @category.Id }, new { @class = "btn btn-success btn-xs" })
+                            <button class="btn btn-danger btn-xs btn-modal" type="button" data-url="@Url.Action("Delete")/@category.Id">Delete</button>
+                            <button class="btn btn-info btn-xs btn-inline" type="button" data-url="@Url.Action("Edit")/@category.Id">Edit</button>
                         </td>
                     </tr>
                 }
@@ -62,41 +61,41 @@
     <div class="form-group">
         @if (Model.Count == 0)
         {
-            <div>No results found.</div>
+        <div>No results found.</div>
         }
         else
         {
-            <ul class="pagination pagination-sm">
-                @if (ViewBag.CurrentPage == 1)
+        <ul class="pagination pagination-sm">
+            @if (ViewBag.CurrentPage == 1)
                 {
-                    <li class="disabled">@Html.ActionLink("«", "Index", new { Search = ViewBag.Search, Page = ViewBag.PreviousPage })</li>
+            <li class="disabled">@Html.ActionLink("«", "Index", new { Search = ViewBag.Search, Page = ViewBag.PreviousPage })</li>
                 }
                 else
                 {
-                    <li>@Html.ActionLink("«", "Index", new { Search = ViewBag.Search, Page = ViewBag.PreviousPage })</li>
+            <li>@Html.ActionLink("«", "Index", new { Search = ViewBag.Search, Page = ViewBag.PreviousPage })</li>
                 }
 
-                @for (int i = 1; i <= ViewBag.NumberOfPages; i++)
+            @for (int i = 1; i <= ViewBag.NumberOfPages; i++)
                 {
                     if (i == ViewBag.CurrentPage)
                     {
-                        <li class="active">@Html.ActionLink(i.ToString(), "Index", new { Search = ViewBag.Search, Page = i.ToString() })</li>
+            <li class="active">@Html.ActionLink(i.ToString(), "Index", new { Search = ViewBag.Search, Page = i.ToString() })</li>
                     }
                     else
                     {
-                        <li>@Html.ActionLink(i.ToString(), "Index", new { Search = ViewBag.Search, Page = i.ToString() })</li>
+            <li>@Html.ActionLink(i.ToString(), "Index", new { Search = ViewBag.Search, Page = i.ToString() })</li>
                     }
                 }
 
-                @if (ViewBag.CurrentPage == ViewBag.NumberOfPages)
+            @if (ViewBag.CurrentPage == ViewBag.NumberOfPages)
                 {
-                    <li class="disabled">@Html.ActionLink("»", "Index", new { Search = ViewBag.Search, Page = ViewBag.NextPage })</li>
+            <li class="disabled">@Html.ActionLink("»", "Index", new { Search = ViewBag.Search, Page = ViewBag.NextPage })</li>
                 }
                 else
                 {
-                    <li>@Html.ActionLink("»", "Index", new { Search = ViewBag.Search, Page = ViewBag.NextPage })</li>
+            <li>@Html.ActionLink("»", "Index", new { Search = ViewBag.Search, Page = ViewBag.NextPage })</li>
                 }
-            </ul>
+        </ul>
         }
     </div>
 }
@@ -104,9 +103,9 @@
 @section scripts {
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#create-category').on('click', function () {
+            $('.btn-modal').on('click', function () {
                 $('#loading').removeClass('hidden');
-                var url = $('#modalBox').data('url');
+                var url = $(this).data('url');
                 $.get(url).success(function (data) {
                     $('#loading').addClass('hidden');
                     $('#modalContent').html(data);
@@ -114,6 +113,17 @@
                         keyboard: false,
                         backdrop: 'static'
                     }).modal('show');
+                }).error(function (error) {
+
+                });
+            });
+
+            $('.btn-inline').on('click', function (e) {
+                $('#loading').removeClass('hidden');
+                var url = $(this).data('url');
+                $.get(url).success(function (data) {
+                    $('#loading').addClass('hidden');
+                    $(data).insertAfter(e.target.parentElement.parentElement);
                 }).error(function (error) {
 
                 });

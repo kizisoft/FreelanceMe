@@ -122,3 +122,52 @@ ul.pagination {
 .modal-body {
     margin: 20px 0 5px 40px;
 }
+
+.warning-delete {
+    font-size: .5em;
+    color: #b72a2a;
+    vertical-align: 2px;
+    margin-right: 10px;
+}
+
+.sub-categories {
+    margin: 25px 10px 0 15px;
+    max-width: 490px;
+}
+
+.sub-categories-box {
+    max-height: 200px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+    .sub-categories-box span:first-of-type,
+    .sub-categories-box span:last-of-type {
+        border-bottom: none;
+        border-radius: 0;
+    }
+
+.btn-icon {
+    padding: 5px 0 0 0;
+    border: 1px solid #e5e5e5;
+    background-color: #eafaf3;
+}
+
+    .btn-icon:hover {
+        color: #ffffff;
+        background-color: #B2F9D0;
+        border-color: #d2d2d2;
+    }
+
+        .btn-icon:hover .text-btn {
+            background-color: #eafaf3;
+        }
+
+.text-btn {
+    margin-top: 5px;
+    width: 100px;
+    background-color: #B2F9D0;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    color: #878AEB;
+}

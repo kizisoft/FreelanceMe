@@ -8,11 +8,13 @@
 
     public class SubCategoryController : Controller
     {
-        private readonly IDeletableEntityRepository<Category> subCategories;
+        private readonly IDeletableEntityRepository<Category> categories;
+        private readonly IDeletableEntityRepository<Subcategory> subcategories;
 
-        public SubCategoryController(IDeletableEntityRepository<Category> subCategories)
+        public SubCategoryController(IDeletableEntityRepository<Category> categories, IDeletableEntityRepository<Subcategory> subcategories)
         {
-            this.subCategories = subCategories;
+            this.categories = categories;
+            this.subcategories = subcategories;
         }
 
         public ActionResult Index()
@@ -33,19 +35,19 @@
                 return this.View(subCategories);
             }
 
-            var subCategoriesDb = this.subCategories.All().Where(c => c.Name == subCategories.Name).FirstOrDefault();
+            var subCategoriesDb = this.subcategories.All().Where(c => c.Name == subCategories.Name).FirstOrDefault();
             if (subCategoriesDb != null)
             {
                 ModelState.AddModelError("", "SubCategory with the same name already exists!");
                 return this.View(subCategories);
             }
 
-            this.subCategories.Add(new Category()
+            this.subcategories.Add(new Subcategory()
             {
                 Name = subCategories.Name,
                 Description = subCategories.Description
             });
-            this.subCategories.SaveChanges();
+            this.subcategories.SaveChanges();
 
             return this.RedirectToAction("Index", "Category");
         }

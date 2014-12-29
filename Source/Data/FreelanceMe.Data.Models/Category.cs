@@ -4,6 +4,6 @@
 
     public class Category : CategoryBase
     {
-        public virtual ICollection<SubCategory> SubCategories { get; set; }
+        public virtual ICollection<Subcategory> SubCategories { get; set; }
     }
 }

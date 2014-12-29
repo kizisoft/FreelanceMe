@@ -10,11 +10,11 @@
         {
         }
 
-        [Required]
-        public Category Category { get; set; }
+        //[Required]
+        //public Category Category { get; set; }
 
         [Required]
-        public SubCategory SubCategory { get; set; }
+        public Subcategory SubCategory { get; set; }
 
         public virtual ICollection<DoTask> DoTasks { get; set; }
     }

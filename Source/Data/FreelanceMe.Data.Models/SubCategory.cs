@@ -1,7 +1,9 @@
 ﻿namespace FreelanceMe.Data.Models
 {
-    public class SubCategory : CategoryBase
+    public class Subcategory : CategoryBase
     {
+        public int CategoryId { get; set; }
 
+        public virtual Category Category { get; set; }
     }
 }

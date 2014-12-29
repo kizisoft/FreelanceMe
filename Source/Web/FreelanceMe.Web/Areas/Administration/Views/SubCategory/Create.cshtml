@@ -1,0 +1,45 @@
+﻿@model FreelanceMe.Web.Areas.Administration.Models.InputModels.SubCategoryInputModel
+@{
+    ViewBag.Title = "Create SubCategory";
+}
+
+<br />
+<h2>@ViewBag.Title</h2>
+<hr />
+<br />
+
+@using (@Html.BeginForm("Create", "SubCategory", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, new { @class = "col-md-2 control-label", @for = "input-name" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { id = "input-name", @class = "form-control", name = "name" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, new { @class = "col-md-2 control-label", @for = "input-description" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { id = "input-description", @class = "form-control", name = "description" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+@{ Html.RenderAction("Index", "CategoriesGrid", new { search = "", page = 1 }); }
+
+<script type="text/javascript">
+    var display = window.getComputedStyle($('.validation-summary-errors ul li')[0], null).getPropertyValue("display");
+    $('.validation-summary-errors ul').attr('style', 'display:' + display);
+    $('.validation-summary-errors ul').addClass('alert alert-danger');
+</script>

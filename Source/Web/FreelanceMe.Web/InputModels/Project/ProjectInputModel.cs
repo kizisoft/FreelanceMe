@@ -15,7 +15,7 @@
 
         public Category Category { get; set; }
 
-        public SubCategory SubCategory { get; set; }
+        public Subcategory SubCategory { get; set; }
 
         public int? Duration { get; set; }
 

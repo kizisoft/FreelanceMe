@@ -1,0 +1,46 @@
+﻿@model IEnumerable<FreelanceMe.Web.Areas.Administration.Models.ViewModels.CategoryBaseViewModel>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <button class="btn btn-primary pull-right">Create new</button>
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr class="info">
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var category in Model)
+                    {
+                        <tr>
+                            <td>@category.Name</td>
+                            <td>@category.Description</td>
+                            <td class="text-center">
+                                <button class="btn btn-danger btn-xs" type="button" data-url="@Url.Action("Delete")/@category.Id">Delete</button>
+                                <button class="btn btn-info btn-xs" type="button" data-url="@Url.Action("Edit")/@category.Id">Edit</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

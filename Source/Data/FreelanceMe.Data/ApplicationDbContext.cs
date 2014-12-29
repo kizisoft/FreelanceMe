@@ -22,7 +22,7 @@
 
         public IDbSet<Category> Categories { get; set; }
 
-        public IDbSet<SubCategory> SubCategories { get; set; }
+        public IDbSet<Subcategory> SubCategories { get; set; }
 
         public static ApplicationDbContext Create()
         {
@@ -37,12 +37,10 @@
 
         private void ApplyAuditInfoRules()
         {
-            // Approach via @julielerman: http://bit.ly/123661P
-            foreach (var entry in
-                this.ChangeTracker.Entries()
-                    .Where(
-                        e =>
-                        e.Entity is IAuditInfo && ((e.State == EntityState.Added) || (e.State == EntityState.Modified))))
+            var entities = this.ChangeTracker.Entries()
+                .Where(e => e.Entity is IAuditInfo && ((e.State == EntityState.Added) || (e.State == EntityState.Modified)));
+
+            foreach (var entry in entities)
             {
                 var entity = (IAuditInfo)entry.Entity;
 

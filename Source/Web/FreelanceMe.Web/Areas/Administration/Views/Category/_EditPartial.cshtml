@@ -1,0 +1,133 @@
+﻿@model FreelanceMe.Web.Areas.Administration.Models.ViewModels.CategoriesViewModel
+@{
+    ViewBag.Title = "Edit Category";
+}
+
+<tr id="inline">
+    <td colspan="3">
+        <div class="container">
+            @using (Ajax.BeginForm("Edit", "Category", null, new AjaxOptions { OnComplete = "test", HttpMethod = "Post", UpdateTargetId = "modalContent" }, new { @class = "form-horizontal" }))
+            {
+                <div class="row">
+                    <h3>@ViewBag.Title</h3>
+                    <hr />
+                </div>
+
+                <div class="container-fluid">
+                    <div class="col-md-4">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Category.Name, new { @class = "control-label", @for = "input-name" })
+                            @Html.EditorFor(model => model.Category.Name, new { htmlAttributes = new { id = "input-name", @class = "form-control", name = "name" } })
+                            @Html.ValidationMessageFor(model => model.Category.Name, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Category.Description, new { @class = "control-label", @for = "input-description" })
+                            @Html.EditorFor(model => model.Category.Description, new { attrId = "input-description", attrClass = "form-control", attrName = "description" })
+                            @Html.ValidationMessageFor(model => model.Category.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Subcategories</label>
+                                        <div class="col-md-10">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Search" name="search" value="@ViewBag.Search">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default btn-search" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <div class="pull-right">
+                                            <button id="create-category" class="btn btn-primary btn-modal" type="button" data-url="@Url.Action("Create")">Create Category</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr class="info">
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var subcategory in @Model.Subcategories)
+                                    {
+                                    <tr>
+                                        <td>@subcategory.Name</td>
+                                        <td>@subcategory.Description</td>
+                                        <td class="text-center">
+                                            <button class="btn btn-danger btn-xs" type="button" data-url="@Url.Action("Delete")/@subcategory.Id">Delete</button>
+                                            <button class="btn btn-info btn-xs" type="button" data-url="@Url.Action("Edit")/@subcategory.Id">Edit</button>
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <hr />
+                    <div class="pull-right">
+                        <button id="btn-close" class="btn btn-default" type="button">Close</button>
+                        <button id="btn-save" class="btn btn-primary" type="submit">Save</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </td>
+</tr>
+
+<script type="text/javascript">
+    function test(result, err) {
+        if (result.responseJSON === "OK") {
+            $('#modalBox').modal({
+                keyboard: true,
+                backdrop: true
+            }).modal('hide');
+            location.reload();
+        }
+    }
+
+    $(document).ready(function () {
+        var display = $('.validation-summary-errors li').css('display') === 'none' ? 'none' : 'block';
+        $('div.validation-summary-errors').attr('style', 'display:' + display);
+
+        $('.pagination li.disabled').addClass("to-disable");
+        $('.btn-inline, .btn-modal, .btn-search, .pagination li').addClass("disabled");
+
+        $('body, ul.pagination a').on('keydown', function (e) {
+            if (e.keyCode === 13 && (e.target.classList.contains('disabled') || e.target.parentElement.classList.contains('disabled'))) {
+                e.preventDefault();
+            }
+
+            return e;
+        });
+
+        $('#btn-close').on('click', function () {
+            $('#inline').remove();
+            $('.btn-inline, .btn-modal, .btn-search, .pagination li').removeClass("disabled");
+            $('.pagination li.to-disable').addClass("disabled");
+        });
+    });
+</script>
